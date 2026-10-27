@@ -1,4 +1,4 @@
-// Netlify Function: BoardBridge token-ingest receiver.
+// Netlify Function (v2 format): BoardBridge token-ingest receiver.
 //
 // The OAuth callback function (oauth-callback.js) exchanges the
 // authorisation code and POSTs the resulting token pair here, because a
@@ -12,36 +12,38 @@
 // TOKEN_INGEST_SECRET (set in the Netlify dashboard, never in code).
 // Tokens, codes and secrets are never logged or echoed. Responses are
 // generic JSON. Nothing here approves a pin or flips the Standard gate.
+//
+// NOTE: this file uses the v2 function format (default export taking a
+// Request) instead of the v1 handler form, because on this site the v1
+// form threw MissingBlobsEnvironmentError: the Blobs environment was
+// not injected for v1 handlers, so getStore() failed before handling
+// the request. If the v2 form still fails, the documented fallback is
+// explicit siteID + token from environment variables (a Netlify
+// personal access token) — that needs the account holder's approval
+// first, because it creates an account-level credential.
 
 import { getStore } from '@netlify/blobs';
 
 const LABEL_RE = /^[A-Za-z0-9_-]{1,64}$/;
 
-function authed(event) {
-  const secret = process.env.TOKEN_INGEST_SECRET;
-  if (!secret) return false;
-  const headers = event.headers || {};
-  const h = headers.authorization || headers.Authorization || '';
-  return h === `Bearer ${secret}`;
-}
-
 function json(statusCode, obj) {
-  return {
-    statusCode,
+  return new Response(JSON.stringify(obj), {
+    status: statusCode,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(obj),
-  };
+  });
 }
 
-export async function handler(event) {
-  if (!authed(event)) {
+export default async (req) => {
+  const secret = process.env.TOKEN_INGEST_SECRET;
+  const auth = req.headers.get('authorization') || '';
+  if (!secret || auth !== `Bearer ${secret}`) {
     return json(401, { error: 'unauthorized' });
   }
-  const store = getStore('boardbridge-tokens');
-  if (event.httpMethod === 'POST') {
+  const store = getStore({ name: 'boardbridge-tokens' });
+  if (req.method === 'POST') {
     let data;
     try {
-      data = JSON.parse(event.body || '{}');
+      data = await req.json();
     } catch {
       return json(400, { error: 'bad payload' });
     }
@@ -59,9 +61,9 @@ export async function handler(event) {
     });
     return json(200, { ok: true });
   }
-  if (event.httpMethod === 'GET') {
-    const params = event.queryStringParameters || {};
-    const label = params.label;
+  if (req.method === 'GET') {
+    const url = new URL(req.url);
+    const label = url.searchParams.get('label');
     if (!label || !LABEL_RE.test(label)) {
       return json(400, { error: 'bad payload' });
     }
@@ -72,4 +74,4 @@ export async function handler(event) {
     return json(200, entry);
   }
   return json(405, { error: 'method not allowed' });
-}
+};
