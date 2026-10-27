@@ -1,0 +1,9 @@
+# Merge this redirect into the site's netlify.toml (do not deploy this
+# file alone — it exists so the redirect rule is copyable).
+# It maps the registered redirect URI /oauth/callback to the function;
+# without it, the function would only answer at /.netlify/functions/.
+
+[[redirects]]
+  from = "/oauth/callback"
+  to = "/.netlify/functions/oauth-callback"
+  status = 200

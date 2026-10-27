@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — BoardBridge</title>
+<meta name="description" content="Privacy policy for BoardBridge, a tool that publishes owner-approved pins to the owner's own Pinterest business accounts via the official Pinterest API.">
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; margin: 0 auto; max-width: 720px; padding: 2rem 1.25rem; color: #222; }
+  h1 { font-size: 1.9rem; }
+  h2 { margin-top: 2rem; }
+  a { color: #0b5cab; }
+  footer { margin-top: 3rem; border-top: 1px solid #ccc; padding-top: 1rem; font-size: 0.9rem; color: #555; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p><strong>Effective date:</strong> October 25, 2026<br>
+  <strong>App:</strong> BoardBridge<br>
+  <strong>Website:</strong> https://prismatic-swan-42d2cb.netlify.app/privacy.html<br>
+  <strong>Contact:</strong> usamapink47@gmail.com</p>
+
+  <p>BoardBridge is a publishing tool for a single publisher: the owner of
+  the connected Pinterest business accounts. It is not a public service and
+  it has no other users. This policy explains what data the app accesses,
+  why, and how it is protected.</p>
+
+  <h2>1. What data the app accesses</h2>
+  <p>Through the official Pinterest API, and only after the account owner
+  approves the connection on Pinterest's own OAuth consent screen, the app
+  accesses:</p>
+  <ul>
+    <li><strong>Account information</strong> — basic profile details of the
+      connected business account, used to confirm which account a pin
+      belongs to.</li>
+    <li><strong>Boards</strong> — the account's board list (names and IDs),
+      used only to place an approved pin on the board the owner chose.</li>
+    <li><strong>Pins</strong> — pins the app itself creates for the account,
+      and pin data needed to check for duplicates before publishing.</li>
+  </ul>
+  <p>The app does <strong>not</strong> access private messages, followers'
+  personal data, analytics about other people, or any data from accounts
+  that have not been connected by their owner. It never asks for, receives,
+  or stores a Pinterest password.</p>
+
+  <h2>2. Why the data is used</h2>
+  <p>The data above is used for one purpose only: publishing pins that the
+  account owner has explicitly approved, to the board the owner chose, on
+  the account the owner connected. No other use is made of it.</p>
+
+  <h2>3. Permissions (scopes) requested</h2>
+  <p>The app requests exactly these Pinterest API permissions, and no others:</p>
+  <ul>
+    <li><code>boards:read</code> — read the account's boards.</li>
+    <li><code>boards:write</code> — create boards only if the owner asks for it.</li>
+    <li><code>pins:read</code> — read pins the app created, to avoid duplicates.</li>
+    <li><code>pins:write</code> — create approved pins.</li>
+    <li><code>user_accounts:read</code> — read basic account information.</li>
+  </ul>
+  <p>Adding a permission later would require the owner to approve it again
+  through Pinterest's consent screen.</p>
+
+  <h2>4. How tokens are stored and refreshed</h2>
+  <ul>
+    <li>Each connected account has its own access token and refresh token
+      pair. Tokens are stored server-side in a file with restricted
+      permissions, are never printed to logs, and are never sent anywhere
+      except to Pinterest's own API.</li>
+    <li>Access tokens expire after 30 days; refresh tokens expire after 60
+      days. The app refreshes tokens automatically before they expire, so
+      the owner does not need to re-connect routinely.</li>
+    <li>If a token is revoked, leaked, or the owner changes their Pinterest
+      password, that account must be re-connected through Pinterest's
+      consent screen.</li>
+  </ul>
+
+  <h2>5. What the app publishes, and what it never does</h2>
+  <p>The app publishes only pins from an approval queue that a human has
+  explicitly approved, one pin at a time. It never publishes automatically
+  without that approval, never posts the identical pin to many boards in a
+  burst, never comments, follows, messages, or acts on anyone else's
+  account, and never uses browser automation or saved passwords.</p>
+
+  <h2>6. Sharing and sale of data</h2>
+  <p>Data accessed by the app is <strong>not sold, rented, or shared with
+  any third party</strong>, for advertising or any other purpose. The only
+  external service the app talks to is Pinterest's own API, to perform the
+  publishing the owner approved. This website itself uses no tracking
+  scripts, no advertising, and no third-party analytics.</p>
+
+  <h2>7. Retention</h2>
+  <p>Tokens and account connection details are kept only while the account
+  stays connected and the app is in use. Pin content (titles, descriptions,
+  links, images) is kept only as long as needed to publish approved pins
+  and to check for duplicates. When an account is disconnected, its tokens
+  and connection details are deleted (see section 8).</p>
+
+  <h2>8. Deletion and disconnection</h2>
+  <p>The owner can disconnect an account at any time in either of these ways:</p>
+  <ul>
+    <li>Revoke BoardBridge's access in their Pinterest account settings; or</li>
+    <li>Contact us at usamapink47@gmail.com and ask for the account
+      to be disconnected and its stored tokens and connection details to
+      be deleted.</li>
+  </ul>
+  <p>On disconnection, stored tokens for that account are deleted. Pins
+  already published to Pinterest remain on Pinterest unless the owner
+  deletes them there; deleting them from Pinterest is outside this app's
+  control.</p>
+
+  <h2>9. Security</h2>
+  <p>Tokens are stored with restricted file permissions and are never
+  included in logs, emails, or chat messages. App secrets are stored
+  separately from the code and are never published. If a token is believed
+  to be leaked, it should be revoked in Pinterest's settings and the
+  account re-connected.</p>
+
+  <h2>10. Changes to this policy</h2>
+  <p>If this policy changes, the effective date above will be updated and
+  the new version will be posted on this page before the change takes
+  effect for any new publishing. Material changes to what data is accessed
+  will require the owner to approve the connection again.</p>
+
+  <h2>11. Contact</h2>
+  <p>Questions about this policy or a deletion request:
+  usamapink47@gmail.com.</p>
+</main>
+<footer>
+  <p><a href="index.html">Back to BoardBridge home</a></p>
+</footer>
+</body>
+</html>
